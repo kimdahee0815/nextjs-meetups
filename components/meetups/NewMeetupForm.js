@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import Card from "../ui/Card";
 import classes from "./NewMeetupForm.module.css";
@@ -9,8 +9,10 @@ function NewMeetupForm(props) {
     const imageInputRef = useRef();
     const addressInputRef = useRef();
     const descriptionInputRef = useRef();
+    const [pending, isPending] = useState(false);
 
     function submitHandler(event) {
+        isPending(true);
         event.preventDefault();
 
         const enteredTitle = titleInputRef.current.value;
@@ -26,6 +28,7 @@ function NewMeetupForm(props) {
         };
 
         props.onAddMeetup(meetupData);
+        isPending(false);
     }
 
     return (
@@ -48,7 +51,7 @@ function NewMeetupForm(props) {
                     <textarea id="description" required rows="5" ref={descriptionInputRef}></textarea>
                 </div>
                 <div className={classes.actions}>
-                    <MeetupFormSubmit />
+                    <button disable={pending}>{pending ? "Submitting...." : "Add Meetup"}</button>
                 </div>
             </form>
         </Card>
