@@ -27,8 +27,7 @@ export async function getStaticPaths() {
     client.close();
     return {
         // I defined all the paths below.
-        // if i didn't define all the paths, you set fallback to true (return empty page first immediately and pregenerated) or blocking (finished page is ready and then shown)
-        fallback: "blocking",
+        fallback: false,
         paths: meetups.map((meetup) => ({ params: { meetupId: meetup._id.toString() } })),
         // paths: [
         //     {
